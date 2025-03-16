@@ -1,4 +1,5 @@
 'use client';
+import {Suspense} from 'react';
 import Image from 'next/image';
 import {redirect, useSearchParams} from 'next/navigation';
 import styles from './HomePageView.module.scss';
@@ -42,57 +43,59 @@ export const HomePageView = (props: HomePageViewProps) => {
     }, [filteredData, page]);
 
     return (
-        <section className={classNames('container', styles.section)}>
-            <h1>Recipes</h1>
+        <Suspense>
+            <section className={classNames('container', styles.section)}>
+                <h1>Recipes</h1>
 
-            <ul className={styles.tabsWrap}>
-                {tabs.map((tab) => (
-                    <li key={tab.idCategory}>
-                        <button
-                            className={classNames(styles.button, {[styles.active]: tab.idCategory === activeTab.idCategory})}
-                            onClick={() => handleChangeTabs(tab.strCategory)}
-                        >
-                            {tab.strCategory}
-                        </button>
-                    </li>
-                ))}
-            </ul>
+                <ul className={styles.tabsWrap}>
+                    {tabs.map((tab) => (
+                        <li key={tab.idCategory}>
+                            <button
+                                className={classNames(styles.button, {[styles.active]: tab.idCategory === activeTab.idCategory})}
+                                onClick={() => handleChangeTabs(tab.strCategory)}
+                            >
+                                {tab.strCategory}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
 
-            <ul className={styles.itemsWrap}>
-                {currentPageData.map((item) => (
-                    <li
-                        key={item.idMeal}
-                        className={styles.item}
-                    >
-                        <Link
-                            href={`/${item.idMeal}`}
-                            prefetch={false}
-                            className={styles.link}
+                <ul className={styles.itemsWrap}>
+                    {currentPageData.map((item) => (
+                        <li
+                            key={item.idMeal}
+                            className={styles.item}
                         >
-                            <div>
-                                <Image
-                                    className={styles.img}
-                                    src={item.strMealThumb + '/large'}
-                                    alt={item.strMeal}
-                                    width={200}
-                                    height={0}
-                                />
-                                <h2 className={styles.title}>{item.strMeal}</h2>
-                            </div>
-                            <div className={styles.flexWrap}>
-                                <p className={styles.infoBlock}>{item.strCategory}</p>
-                                <p className={styles.infoBlock}>{item.strArea}</p>
-                            </div>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            {Math.ceil(filteredData.length / 10) > 1 && (
-                <PaginationBlock
-                    pages={Math.ceil(filteredData.length / 10)}
-                    page={Number(page)}
-                />
-            )}
-        </section>
+                            <Link
+                                href={`/${item.idMeal}`}
+                                prefetch={false}
+                                className={styles.link}
+                            >
+                                <div>
+                                    <Image
+                                        className={styles.img}
+                                        src={item.strMealThumb + '/large'}
+                                        alt={item.strMeal}
+                                        width={200}
+                                        height={0}
+                                    />
+                                    <h2 className={styles.title}>{item.strMeal}</h2>
+                                </div>
+                                <div className={styles.flexWrap}>
+                                    <p className={styles.infoBlock}>{item.strCategory}</p>
+                                    <p className={styles.infoBlock}>{item.strArea}</p>
+                                </div>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+                {Math.ceil(filteredData.length / 10) > 1 && (
+                    <PaginationBlock
+                        pages={Math.ceil(filteredData.length / 10)}
+                        page={Number(page)}
+                    />
+                )}
+            </section>
+        </Suspense>
     );
 };
