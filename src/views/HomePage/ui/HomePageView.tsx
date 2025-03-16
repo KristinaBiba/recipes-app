@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import {redirect} from 'next/navigation';
+import {redirect, useSearchParams} from 'next/navigation';
 import styles from './HomePageView.module.scss';
 import classNames from 'classnames';
 import {CategoriesInter, MealInter} from '@/lib/types/type';
@@ -11,11 +11,13 @@ import {PaginationBlock} from '@/components/PaginationBlock';
 interface HomePageViewProps {
     data: MealInter[];
     categories: CategoriesInter[];
-    page: string;
 }
 
 export const HomePageView = (props: HomePageViewProps) => {
-    const {data, categories, page} = props;
+    const {data, categories} = props;
+
+    const params = useSearchParams();
+    const page = params.get('page') ? params.get('page') : '1';
 
     const tabs: CategoriesInter[] = [{strCategory: 'All', idCategory: 'all', strCategoryDescription: '', strCategoryThumb: ''}, ...categories];
 
