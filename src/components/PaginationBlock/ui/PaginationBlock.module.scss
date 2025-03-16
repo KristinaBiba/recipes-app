@@ -1,0 +1,63 @@
+.wrap {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buttonWrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    width: 56px;
+    height: 56px;
+    transition: border-color var(--transition), color var(--transition);
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+    border: 3px solid transparent;
+    transition: border-color var(--transition), color var(--transition);
+
+    font-size: 28px;
+    line-height: 29px;
+    width: 56px;
+    height: 56px;
+}
+
+.link:hover,
+.arrow:hover {
+    border-color: var(--very-light-blue-color);
+    color: var(--blue-accent-color);
+}
+
+.activeLink {
+    cursor: auto;
+    color: var(--blue-accent-color);
+    border: 3px solid var(--blue-accent-color);
+}
+
+.leftChevron {
+    transform: rotate(90deg);
+}
+
+.rightChevron {
+    transform: rotate(-90deg);
+}
